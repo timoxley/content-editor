@@ -1,0 +1,20 @@
+{
+  "name": "content-editor",
+  "repo": "timoxley/content-editor",
+  "description": "Enables editable page text.",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/bus": "*",
+    "component/emitter": "*",
+    "component/domify": "*",
+    "component/classes": "*",
+    "timoxley/element-selector": "*",
+    "timoxley/keycode": "*",
+    "enyo/domready": "*"
+  },
+  "development": {},
+  "scripts": [
+    "index.js"
+  ]
+}

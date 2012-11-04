@@ -1,0 +1,17 @@
+<html>
+<head>
+<link rel="stylesheet" href="/build/build.css" type='text/css' />
+</head>
+<body>
+<p>
+Whao ther aer <strong>mny</strong> typeos
+</p>
+<script src="/build/build.js" ></script>
+<script>
+  var ContentEditor = require('content-editor')
+  var editor = ContentEditor()
+  editor.on('changed', console.log.bind(console, 'changed'))
+</script>
+</body>
+</html>
+
