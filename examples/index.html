@@ -6,11 +6,17 @@
 <p>
 Whao ther aer <strong>mny</strong> typeos
 </p>
+<a href="#" id="enable">Enable</a>
+<a href="#" id="disable">Disable</a>
 <script src="/build/build.js" ></script>
 <script>
   var ContentEditor = require('content-editor')
   var editor = ContentEditor()
   editor.on('changed', console.log.bind(console, 'changed'))
+  var enable = document.getElementById('enable')
+  var disable = document.getElementById('disable')
+  enable.addEventListener('click',  editor.enable.bind(editor))
+  disable.addEventListener('click',  editor.disable.bind(editor))
 </script>
 </body>
 </html>
