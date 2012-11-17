@@ -88,7 +88,8 @@ function stopEdit() {
   if (this.changes.after !== this.changes.before) {
     this.emit('changed', {
       before: this.changes.before,
-      after: this.changes.after
+      after: this.changes.after,
+      el: el
     })
   }
   this.changes = {}
