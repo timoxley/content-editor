@@ -53,17 +53,15 @@ ContentEditor.prototype = {}
 Emitter(ContentEditor.prototype)
 
 function enable() {
-  classes(document.body).add('content-editor')
   this.elementSelector.enable()
   this.elementSelector.once('select', this.startEdit)
   this.once('disable', this.disable)
 }
 
 function disable() {
-  classes(document.body).remove('content-editor')
   this.elementSelector.disable()
   this.stopEdit()
-  this.selector.off('select', this.startEdit)
+  this.elementSelector.off('select', this.startEdit)
   this.once('enable', this.enable)
 }
 
@@ -81,6 +79,7 @@ function startEdit(el) {
 }
 
 function stopEdit() {
+  if (!this.el) return
   var el = this.el
   el.removeEventListener('focusout', this.cancel)
   el.removeAttribute('contentEditable')
