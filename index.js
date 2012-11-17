@@ -41,7 +41,7 @@ function ContentEditor(options) {
   this.stopEdit = stopEdit.bind(this)
   this.cancel = cancel.bind(this)
   this.once('enable', this.enable)
-  
+
 
   if (this.enabled) {
     this.emit('enable')
@@ -62,7 +62,7 @@ function enable() {
 function disable() {
   classes(document.body).remove('content-editor')
   this.elementSelector.disable()
-  this.stopEditElement()
+  this.stopEdit()
   this.selector.off('select', this.startEdit)
   this.once('enable', this.enable)
 }
