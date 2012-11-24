@@ -2,10 +2,9 @@
   "name": "content-editor",
   "repo": "timoxley/content-editor",
   "description": "Enables editable page text.",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "keywords": [],
   "dependencies": {
-    "component/bus": "*",
     "component/emitter": "*",
     "component/domify": "*",
     "component/classes": "*",
