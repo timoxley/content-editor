@@ -12,7 +12,9 @@ Whao ther aer <strong>mny</strong> typeos
 <script>
   var ContentEditor = require('content-editor')
   var editor = ContentEditor()
+  editor.enable()
   editor.on('changed', console.log.bind(console, 'changed'))
+
   var enable = document.getElementById('enable')
   var disable = document.getElementById('disable')
   enable.addEventListener('click',  editor.enable.bind(editor))

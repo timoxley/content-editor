@@ -1,0 +1,1 @@
+module.exports = '<div>\n	<button class="cancel" title="Cancel">&#10008;</button>\n	<button class="ok" title="Ok">&#10004;</button>\n</div>\n';

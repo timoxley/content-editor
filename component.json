@@ -10,11 +10,13 @@
     "component/domify": "*",
     "component/classes": "*",
     "timoxley/element-selector": "*",
+    "timoxley/state-machine": "*",
     "timoxley/keycode": "*",
     "enyo/domready": "*"
   },
   "development": {},
   "scripts": [
-    "index.js"
+    "index.js",
+    "template.js"
   ]
 }
