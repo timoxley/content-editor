@@ -6,16 +6,13 @@
   "keywords": [],
   "dependencies": {
     "component/emitter": "*",
-    "component/domify": "*",
-    "component/classes": "*",
     "timoxley/element-selector": "*",
-    "timoxley/state-machine": "*",
-    "timoxley/keycode": "*",
-    "enyo/domready": "*"
+    "timoxley/state-machine": "*"
   },
-  "development": {},
+  "development": {
+    "component/classes": "*"
+  },
   "scripts": [
-    "index.js",
-    "template.js"
+    "index.js"
   ]
 }

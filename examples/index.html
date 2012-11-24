@@ -1,24 +1,57 @@
 <html>
 <head>
 <link rel="stylesheet" href="/build/build.css" type='text/css' />
+<style>
+.show {
+  display: inline;
+}
+
+.hide {
+  display: none;
+}
+</style>
 </head>
 <body>
 <p>
 Whao ther aer <strong>mny</strong> typeos
 </p>
-<a href="#" id="enable">Enable</a>
-<a href="#" id="disable">Disable</a>
+<div id='buttons' class="hide">
+  <a href="#" id="save">Save</a>
+  <a href="#" id="cancel">Cancel</a>
+</div>
 <script src="/build/build.js" ></script>
 <script>
   var ContentEditor = require('content-editor')
+  var classes = require('component-classes')
   var editor = ContentEditor()
   editor.enable()
   editor.on('changed', console.log.bind(console, 'changed'))
 
-  var enable = document.getElementById('enable')
-  var disable = document.getElementById('disable')
-  enable.addEventListener('click',  editor.enable.bind(editor))
-  disable.addEventListener('click',  editor.disable.bind(editor))
+  editor.on('editing', function() {
+    classes(buttons)
+      .toggle('show')
+      .toggle('hide')
+  })
+
+  editor.on('leaveEditing', function() {
+    classes(buttons)
+      .toggle('show')
+      .toggle('hide')
+  })
+
+  var buttons = document.getElementById('buttons')
+  var save = document.getElementById('save')
+  var cancel = document.getElementById('cancel')
+  save.addEventListener('click',  function(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    editor.commit()
+  })
+  cancel.addEventListener('click', function(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    editor.cancel()
+  })
 </script>
 </body>
 </html>
