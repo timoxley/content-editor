@@ -12,7 +12,7 @@
 </style>
 </head>
 <body>
-<p>
+<p class="editable">
 Whao ther aer <strong>mny</strong> typeos
 </p>
 <div id='buttons' class="hide">
@@ -27,7 +27,9 @@ Whao ther aer <strong>mny</strong> typeos
 <script>
   var ContentEditor = require('content-editor')
   var classes = require('component-classes')
-  var editor = ContentEditor()
+  var editor = ContentEditor({
+    selector: '.editable'
+  })
   editor.disable()
 
   editor.on('changed', console.log.bind(console, 'saved!'))
