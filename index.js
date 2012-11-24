@@ -116,8 +116,8 @@ function ContentEditor(options) {
 }
 
 function addOkCancel(el) {
-  document.body.appendChild(templateEl)
   var position = el.getClientRects()[0]
+  el.offsetParent.appendChild(templateEl)
   templateEl.style.position = 'absolute'
   templateEl.style.left = position.right - templateEl.offsetWidth
   templateEl.style.top = position.bottom + 3
