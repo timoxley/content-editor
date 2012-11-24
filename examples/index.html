@@ -19,13 +19,18 @@ Whao ther aer <strong>mny</strong> typeos
   <a href="#" id="save">Save</a>
   <a href="#" id="cancel">Cancel</a>
 </div>
+<br />
+<br />
+<a href="#" id="enable" class="show">Enable</a>
+<a href="#" id="disable" class="hide">Disable</a>
 <script src="/build/build.js" ></script>
 <script>
   var ContentEditor = require('content-editor')
   var classes = require('component-classes')
   var editor = ContentEditor()
-  editor.enable()
-  editor.on('changed', console.log.bind(console, 'changed'))
+  editor.disable()
+
+  editor.on('changed', console.log.bind(console, 'saved!'))
 
   editor.on('editing', function() {
     classes(buttons)
@@ -42,16 +47,42 @@ Whao ther aer <strong>mny</strong> typeos
   var buttons = document.getElementById('buttons')
   var save = document.getElementById('save')
   var cancel = document.getElementById('cancel')
+
   save.addEventListener('click',  function(e) {
     e.preventDefault()
     e.stopPropagation()
     editor.commit()
   })
+
   cancel.addEventListener('click', function(e) {
     e.preventDefault()
     e.stopPropagation()
     editor.cancel()
   })
+
+  var enable = document.getElementById('enable')
+  var disable = document.getElementById('disable')
+
+  enable.addEventListener('click', toggle)
+  enable.addEventListener('click', function() {
+    editor.enable()
+  })
+  disable.addEventListener('click', toggle)
+  disable.addEventListener('click', function() {
+    editor.disable()
+  })
+
+  function toggle(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    classes(enable)
+      .toggle('show')
+      .toggle('hide')
+    classes(disable)
+      .toggle('show')
+      .toggle('hide')
+  }
+
 </script>
 </body>
 </html>
