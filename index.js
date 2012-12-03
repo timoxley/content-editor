@@ -9,10 +9,12 @@ var emitter = new Emitter() // handles events for all edit-content instances.
 var states = {
   Disabled: {
     enable: 'Enabled',
+    toggle: 'Enabled',
     disable: 'Disabled'
   },
   Enabled: {
     disable: 'Disabled',
+    toggle: 'Disabled',
     enable: 'Enabled',
     edit: 'Editing'
   },
