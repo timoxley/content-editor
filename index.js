@@ -36,7 +36,8 @@ function ContentEditor(options) {
 
   this.elementSelector = ElementSelector({
     selectEvent: options.editEvent || 'dblclick',
-    selector: options.selector
+    selector: options.selector,
+    invalidSelector: options.invalidSelector
   })
 
   var proto = this.__proto__ = State.machine(states)
