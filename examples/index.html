@@ -23,7 +23,7 @@ Whao ther aer <strong>mny</strong> typeos
 <br />
 <a href="#" id="enable" class="show">Enable</a>
 <a href="#" id="disable" class="hide">Disable</a>
-<script src="/build/build.js" ></script>
+<script src="../build/build.js" ></script>
 <script>
   var ContentEditor = require('content-editor')
   var classes = require('component-classes')
@@ -32,7 +32,7 @@ Whao ther aer <strong>mny</strong> typeos
   })
   editor.disable()
 
-  editor.on('changed', console.log.bind(console, 'saved!'))
+  editor.on('commit', console.log.bind(console, 'saved!'))
 
   editor.on('editing', function() {
     classes(buttons)

@@ -7,7 +7,7 @@
   "dependencies": {
     "component/emitter": "*",
     "timoxley/element-selector": "*",
-    "timoxley/state-machine": "*"
+    "timoxley/stately": "*"
   },
   "development": {
     "component/classes": "*"

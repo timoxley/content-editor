@@ -2,7 +2,7 @@
 
 var Emitter = require('emitter')
 var ElementSelector = require('element-selector')
-var State = require('state-machine')
+var State = require('stately')
 
 var emitter = new Emitter() // handles events for all edit-content instances.
 
