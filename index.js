@@ -3,6 +3,7 @@
 var Emitter = require('emitter')
 var ElementSelector = require('element-selector')
 var State = require('stately')
+var keycode = require('keycode')
 
 var emitter = new Emitter() // handles events for all edit-content instances.
 
@@ -35,6 +36,7 @@ function ContentEditor(options) {
   this.elementSelector = ElementSelector(options)
 
   var proto = this.__proto__ = State.machine(states)
+  Emitter(proto)
 
   proto.onEnabled = function() {
     this.elementSelector.enable()
@@ -44,6 +46,18 @@ function ContentEditor(options) {
     }.bind(this))
     this.emit('enabled')
   }.bind(this)
+
+  proto.on('editing', function addFocus(data) {
+    var self = this
+    var el = data.el
+    function onBlur() {
+      self.cancel()
+    }
+    this.once('leaveEditing', function() {
+      el.removeEventListener('blur', onBlur)
+    })
+    el.addEventListener('blur', onBlur)
+  })
 
   proto.onleaveEnabled = function() {
     this.elementSelector.disable()
@@ -96,5 +110,11 @@ function ContentEditor(options) {
     }
   }.bind(this)
 
-  Emitter(proto)
+  var self = this
+  window.addEventListener('keydown', function(e) {
+    switch(keycode(e)) {
+      case 'esc':
+        self.cancel()
+    }
+  })
 }
