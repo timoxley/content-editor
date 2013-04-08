@@ -1,6 +1,6 @@
 <html>
 <head>
-<link rel="stylesheet" href="/build/build.css" type='text/css' />
+<link rel="stylesheet" href="../build/build.css" type='text/css' />
 <style>
 .show {
   display: inline;
@@ -28,7 +28,7 @@ Whao ther aer <strong>mny</strong> typeos
   var ContentEditor = require('content-editor')
   var classes = require('component-classes')
   var editor = ContentEditor({
-    selector: '.editable'
+    selector: '.editable, .editable *'
   })
   editor.disable()
 

@@ -33,12 +33,8 @@ module.exports.ContentEditor = ContentEditor
 
 function ContentEditor(options) {
   options = options || {}
-
-  this.elementSelector = ElementSelector({
-    selectEvent: options.editEvent || 'dblclick',
-    selector: options.selector,
-    invalidSelector: options.invalidSelector
-  })
+  options.selectEvent = options.selectEvent || options.editEvent || 'dblclick'
+  this.elementSelector = ElementSelector(options)
 
   var proto = this.__proto__ = State.machine(states)
 
