@@ -47,16 +47,18 @@ function ContentEditor(options) {
     this.emit('enabled')
   }.bind(this)
 
+  proto.onBlur = function onBlur() {
+    self.cancel()
+  }
+
   proto.on('editing', function addFocus(data) {
     var self = this
     var el = data.el
-    function onBlur() {
-      self.cancel()
-    }
+
     this.once('leaveEditing', function() {
-      el.removeEventListener('blur', onBlur)
+      el.removeEventListener('blur', self.onBlur)
     })
-    el.addEventListener('blur', onBlur)
+    el.addEventListener('blur', self.onBlur)
   })
 
   proto.onleaveEnabled = function() {
