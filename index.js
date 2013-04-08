@@ -25,13 +25,11 @@ var states = {
   }
 }
 
-module.exports = function(options) {
-  return new ContentEditor(options)
-}
-
-module.exports.ContentEditor = ContentEditor
+module.exports = ContentEditor
 
 function ContentEditor(options) {
+  if (!(this instanceof ContentEditor)) return new ContentEditor(options)
+
   options = options || {}
   options.selectEvent = options.selectEvent || options.editEvent || 'dblclick'
   this.elementSelector = ElementSelector(options)
