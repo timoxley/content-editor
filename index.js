@@ -39,7 +39,6 @@ function ContentEditor(options) {
   Emitter(proto)
   var self = this
   proto.onenterEnabled = function() {
-    console.log('enter enabled')
     this.elementSelector.enable()
     this.elementSelector.on('select', this.onSelect)
     this.emit('enabled')
