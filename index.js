@@ -38,19 +38,21 @@ function ContentEditor(options) {
   var proto = this.__proto__ = State.machine(states)
   Emitter(proto)
 
-  proto.onEnabled = function() {
+  proto.onenterEnabled = function() {
+    console.log('enter enabled')
     this.elementSelector.enable()
-    this.elementSelector.once('select', function(el) {
-      this.el = el
-      this.edit()
-    }.bind(this))
+    this.elementSelector.on('select', this.onSelect.bind(this))
     this.emit('enabled')
   }.bind(this)
+
+  proto.onSelect = function(el, e) {
+    this.el = el
+    this.edit()
+  }
 
   proto.onBlur = function onBlur() {
     self.cancel()
   }
-
   proto.on('editing', function addFocus(data) {
     var self = this
     var el = data.el
