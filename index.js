@@ -89,7 +89,11 @@ function ContentEditor(options) {
   }.bind(this);
 
   proto.onleaveEditing = function(event, oldState, newState) {
-    this.emit('leaveEditing')
+    this.emit('leaveEditing', {
+      before: this.changes.before,
+      after: this.changes.after,
+      el: this.el
+    })
     this.el.removeAttribute('contentEditable')
     this.elementSelector.deselect()
     this.el.blur()
