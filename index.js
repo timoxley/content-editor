@@ -21,6 +21,7 @@ var states = {
   },
   Editing: {
     disable: 'Disabled',
+    stop: 'Enabled',
     cancel: 'Enabled',
     commit: 'Enabled'
   }
@@ -50,7 +51,7 @@ function ContentEditor(options) {
   }
 
   proto.onBlur = function onBlur() {
-    self.cancel()
+    self.stop()
   }
   proto.on('editing', function addFocus(data) {
     var self = this
@@ -99,6 +100,10 @@ function ContentEditor(options) {
   proto.oncancel = function() {
     this.el.innerHTML = this.changes.before
     this.emit('cancelled', {el: this.el})
+  }.bind(this)
+
+  proto.onstop = function() {
+    // do nothing
   }.bind(this)
 
   proto.oncommit = function() {
