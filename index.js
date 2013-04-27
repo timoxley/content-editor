@@ -22,8 +22,7 @@ var states = {
   Editing: {
     disable: 'Disabled',
     stop: 'Enabled',
-    cancel: 'Enabled',
-    commit: 'Enabled'
+    cancel: 'Enabled'
   }
 }
 
@@ -31,7 +30,7 @@ module.exports = ContentEditor
 
 function ContentEditor(options) {
   if (!(this instanceof ContentEditor)) return new ContentEditor(options)
-
+  this.changes = []
   options = options || {}
   options.selectEvent = options.selectEvent || options.editEvent || 'dblclick'
   this.elementSelector = ElementSelector(options)
@@ -53,14 +52,14 @@ function ContentEditor(options) {
   proto.onBlur = function onBlur() {
     self.stop()
   }
-  proto.on('editing', function addFocus(data) {
-    var self = this
-    var el = data.el
 
+  proto.on('editing', function addFocus(changes) {
+    var self = this
+    var lastChange = this.changes[this.changes.length - 1]
     this.once('leaveEditing', function() {
-      el.removeEventListener('blur', self.onBlur)
+      lastChange.el.removeEventListener('blur', self.onBlur)
     })
-    el.addEventListener('blur', self.onBlur)
+    lastChange.el.addEventListener('blur', self.onBlur)
   })
 
   proto.onleaveEnabled = function() {
@@ -77,48 +76,45 @@ function ContentEditor(options) {
     this.el.setAttribute('contentEditable', true)
     this.el.focus()
     this.elementSelector.disable()
-
-    // Save content state
-    this.changes = this.changes || {}
-    this.changes.before = this.el.innerHTML
-    this.emit('editing', {
-      before: this.changes.before,
-      el: this.el
-    })
-    this.emit('change', 'editing', true)
+    this.addChange(this.el)
+    this.emit('editing', this.changes)
   }.bind(this);
 
   proto.onleaveEditing = function(event, oldState, newState) {
-    this.emit('leaveEditing', {
-      before: this.changes.before,
-      after: this.changes.after,
-      el: this.el
-    })
     this.el.removeAttribute('contentEditable')
-    this.elementSelector.deselect()
     this.el.blur()
     this.el = null
-    this.emit('change', 'editing', false)
+    this.elementSelector.deselect()
+    this.emit('leaveEditing', this.changes)
+
   }.bind(this);
 
   proto.oncancel = function() {
-    this.el.innerHTML = this.changes.before
-    this.emit('cancelled', {el: this.el})
+    console.log('cancel')
+    this.changes.forEach(function(change) {
+      change.revert()
+    })
+    this.emit('cancelled', this.currentlyEditing)
   }.bind(this)
+
+  proto.addChange = function addChange(el) {
+    var change = this.getChange(el)
+    if (!change) {
+      change = new Change(el)
+      this.changes.push(change)
+    }
+    return change
+  }
+  proto.getChange = function addChange(el) {
+    var changes = this.changes.filter(function(change) {
+      return change.el.isEqualNode(el)
+    })
+    if (changes.length) return changes.pop()
+  }
 
   proto.onstop = function() {
+    this.emit('stop', this.changes)
     // do nothing
-  }.bind(this)
-
-  proto.oncommit = function() {
-    this.changes.after = this.el.innerHTML
-    if (this.changes.after !== this.changes.before) {
-      this.emit('commit', {
-        before: this.changes.before,
-        after: this.changes.after,
-        el: this.el
-      })
-    }
   }.bind(this)
 
   var self = this
@@ -128,4 +124,25 @@ function ContentEditor(options) {
         self.cancel()
     }
   })
+}
+
+
+function Change(el) {
+  this.el = el
+  this.before = this.el.innerHTML
+  this.after = this.before
+  this.el.addEventListener('change', this.update.bind(this))
+}
+
+Change.prototype.update = function update() {
+  this.after = this.el.innerHTML
+}
+
+Change.prototype.revert = function revert() {
+  this.el.innerHTML = this.before
+  this.after = this.before
+}
+
+Change.prototype.didChange = function didChange() {
+ return this.before === this.after
 }
